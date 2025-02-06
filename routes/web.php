@@ -2,14 +2,16 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
-$router->get('/register', 'AuthController@register'); // Allow GET for testing
+// Authentication Routes
 $router->post('/register', 'AuthController@register'); 
+$router->post('/login', 'AuthController@login'); 
 
-$router->get('/login', 'AuthController@login'); // Allow GET for testing
-$router->post('/login', 'AuthController@login');
+// User CRUD Routes
+$router->get('/user/{id}', 'AuthController@getUser'); // Get user by ID
+$router->put('/user/{id}', 'AuthController@updateUser'); // Update user
+$router->delete('/user/{id}', 'AuthController@deleteUser'); // Delete user
 
-$router->get('/user', 'AuthController@getUser');
-
+// Default route (check if API is working)
 $router->get('/', function () use ($router) {
-    return $router->app->version(); // Returns Lumen version
+    return response()->json(['message' => 'Lumen API is running!', 'version' => $router->app->version()]);
 });
